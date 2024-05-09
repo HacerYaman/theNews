@@ -1,0 +1,9 @@
+package com.baitent.thenews.presentation
+
+import androidx.compose.ui.unit.dp
+
+object Dimens {
+    //constant padding values
+    val MediumPadding1=24.dp
+    val MediumPadding2=30.dp
+}
