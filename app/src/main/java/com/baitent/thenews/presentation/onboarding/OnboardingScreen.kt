@@ -90,5 +90,6 @@ fun OnboardingScreen() {
                 })
             }
         }
+        Spacer(modifier = Modifier.weight(0.5f))
     }
 }
