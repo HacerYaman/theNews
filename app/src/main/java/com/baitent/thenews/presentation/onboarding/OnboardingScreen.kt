@@ -15,12 +15,16 @@ import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.baitent.thenews.presentation.Dimens.MediumPadding2
 import com.baitent.thenews.presentation.Dimens.PageIndicatorWidth
+import com.baitent.thenews.presentation.common.NewsButton
+import com.baitent.thenews.presentation.common.NewsTextButton
 import com.baitent.thenews.presentation.onboarding.component.OnboardingPage
 import com.baitent.thenews.presentation.onboarding.component.PageIndicator
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -59,11 +63,32 @@ fun OnboardingScreen() {
                 selectedPage = pagerState.currentPage,
                 modifier = Modifier.width(PageIndicatorWidth),
             )
+
+
+            Row(verticalAlignment = Alignment.CenterVertically) {
+
+                val scope = rememberCoroutineScope()
+
+                if (buttonState.value[0].isNotEmpty()) {
+                    NewsTextButton(text = buttonState.value[0], onClick = {
+                        scope.launch {
+                            pagerState.animateScrollToPage(page = pagerState.currentPage - 1)
+                        }
+                    })
+                }
+
+                NewsButton(text = buttonState.value[1], onClick = {
+                    scope.launch {
+                        if (pagerState.currentPage == 3) {
+                            //TODO: Navigate to home screen
+                        } else {
+                            pagerState.animateScrollToPage(
+                                page = pagerState.currentPage + 1
+                            )
+                        }
+                    }
+                })
+            }
         }
-
-        Row(verticalAlignment = Alignment.CenterVertically) {
-
-        }
-
     }
 }
